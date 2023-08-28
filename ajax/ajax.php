@@ -40,6 +40,10 @@ if(isset($_POST['action']) && $_POST['action']=="updateEmp"){
         $resp["statuscode"]="0";
         $resp["description"]="Updated succesfully";
     }
+    else{
+        $resp["statuscode"]="1";
+        $resp["description"]="Something went wrong with connection";
+    }
     echo json_encode($resp);
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
 require_once "./config/config.php";
-// require "function/addData.php";
+
 require_once "function/function.php";
 $conn = mysqli_db_connect("states");
 if(isset($ID)){
@@ -17,7 +17,8 @@ else{
 }
 
   if(isset($_POST['register'])){
-    ragisterUser();
+    $formerr=ragisterUser();
+    extract($formerr);
   }
 
 ?>
@@ -48,7 +49,7 @@ else{
         <br><br>
       </div>
       <div class="col-sm-12 col-lg-6">
-        <label for="fathername">Father Name:</label><span class="error">*<?php echo $fatherNameErr ?></span><br>
+        <label for="fathername">Father Name:</label><span class="error">*<?php echo $fatherNameErr; ?></span><br>
         <input type="text" id="fathername" class="form-control" name="fathername" value="<?php if(isset($Employee_name)){echo $Employee_name;}?>"><br><br>
       </div>
     </div>
