@@ -23,8 +23,9 @@ if($rows_count>0){
 
 if(isset($_POST['action']) && $_POST['action']=="deleteEmp"){
     extract($_POST);
+    global $conByMysqliCrud;
     $sql = "DELETE FROM ragistration WHERE emp_id = '".$emp_id."'";
-      $result = mysqli_query($connectedByMysqlidbnameCrud, $sql);
+      $result = mysqli_query($conByMysqliCrud, $sql);
        if($result)
        {
         $resp['statuscode']='00';
@@ -34,7 +35,11 @@ if(isset($_POST['action']) && $_POST['action']=="deleteEmp"){
 }
 if(isset($_POST['action']) && $_POST['action']=="updateEmp"){
     extract($_POST);
-    $resp = updatedata();
-    
+    $result= updatedata();
+    if($result){
+        $resp["statuscode"]="0";
+        $resp["description"]="Updated succesfully";
+    }
+    echo json_encode($resp);
 }
 ?>

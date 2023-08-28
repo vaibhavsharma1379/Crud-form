@@ -3,7 +3,7 @@ function PDO_db_connect(){
 
     try{
        
-        $conn =new PDO("mysql:host=localhost;dbname=crud operation",'me_user','1234');
+        $conn =new PDO("mysql:host=localhost;dbname=crud operation",'root','');
         $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
         // echo "connected succesfully";
         return $conn;
@@ -26,4 +26,6 @@ function mysqli_db_connect($dbname){
     return $conn;
 }
 $conByMysqliCrud=mysqli_db_connect("crud operation");
+$connPDO=PDO_db_connect();
+
 ?>

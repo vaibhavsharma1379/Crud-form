@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php require_once("function/function.php");
+        require_once "./config/config.php";
+ ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,12 +15,12 @@
 </head>
 
 <body>
-    <div>
+    <div id="vaibhav">
         <div class="m-5 d-flex justify-content-between">
             <h2>Employee Details</h2>
             <h3><a href="registration.php">Register Employee</a></h3>
         </div>
-        <div id="check"></div>
+        <!-- <div id="check"></div> -->
 
         <table id="emptable" class="table table-striped table-hover">
             <thead>
@@ -40,7 +42,10 @@
                 </tr>
             </thead>
             <tbody>
-                <?php require("function/getEmpDEtails.php") ?>
+            
+                <?php
+                getEmpdetails();
+                ?>
 
 
             </tbody>
@@ -59,9 +64,12 @@
                     success: function(data, status) {
                         resp = JSON.parse(data);
                         alert(resp.description);
-                        $("#emptable").load(window.location.href + "#emptable");
-                    }
-                })
+                        
+                          //$("#emptable").load(window.location.href + "#emptable");
+                          $( "#vaibhav" ).load(window.location.href + " #vaibhav" );
+                      //  $("#emptable").html(resp);
+                }})
+            
             }
         </script>
 

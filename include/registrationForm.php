@@ -1,6 +1,6 @@
 <?php
 require_once "./config/config.php";
-require "function/addData.php";
+// require "function/addData.php";
 require_once "function/function.php";
 $conn = mysqli_db_connect("states");
 if(isset($ID)){
@@ -15,6 +15,10 @@ else{
   $fromName="Registration Page";
   $buttonName="Register";
 }
+
+  if(isset($_POST['register'])){
+    ragisterUser();
+  }
 
 ?>
 
@@ -51,7 +55,7 @@ else{
     <div class="row">
       <div class="col-6">
         <label for="mobile">Mobile Number:</label><span class="error">*<?php echo $mobileNoErr ?></span><br>
-        <input type="text" id="mobile" class="form-control" name="mobile" value="<?php if(isset($Employee_name)){echo $Employee_name;}?>"><br><br>
+        <input type="text" id="mobile" class="form-control" name="mobile" value="<?php if(isset($Mobile_number)){echo $Mobile_number;}?>"><br><br>
       </div>
       <div class="col-6">
         <label for="age">Age:</label><span class="error">*<?php echo $ageErr ?></span><br>
@@ -159,19 +163,20 @@ else{
 
   $(document).ready(function(){
     $("#EmpForm").on('submit',function(e){
-       e.preventDefault();
-       var form = $(this);
-       
-       $.ajax({
-      url:'ajax/ajax.php',
-      type:'POST',
-      data:form.serialize(),
-      success:function(resp){
-    alert(resp);
-      }
-       });
+        e.preventDefault();
+        var form = $(this);
+        $.ajax({
+        url:'ajax/ajax.php',
+        type:'POST',
+        data:form.serialize(),
+        success:function(data){
+          resp = JSON.parse(data);
+          alert(resp.description);
+          $("#emptable").load(window.location.href + "#emptable");
+        }
+        });
+      });
     });
-  });
 </script>
 
  
