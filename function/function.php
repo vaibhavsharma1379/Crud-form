@@ -1,5 +1,5 @@
 <?php
-//  require_once "./config/config.php";
+
 function getEmpDetailsByID($tableName, $key, $keyVal)
 {
     global $conByMysqliCrud;
@@ -77,6 +77,7 @@ function ageValidation($age)
 }
 function updatedata()
 {
+
     global $conByMysqliCrud;
     // print_r($_POST);
     $emp_id = $_POST['emp_id'];
@@ -97,20 +98,20 @@ function updatedata()
     $district = $_POST['district'];
     $designation = $_POST['designation'];
     $about = $_POST['about'];
+
     $query = "UPDATE ragistration SET Employee_name='$emp_name',Father_name='$fathers_name',Mobile_number='$mobile_number',Age='$age',Gender='$gender',Skills='$Skills',DOB='$dob',DOJ='$doj',State='$state',District='$district',Designation='$designation',About_employee='$about'  where emp_id=$emp_id";
 
     $result = mysqli_query($conByMysqliCrud, $query);
     return $result;
 }
-
-
+$empNameErr = $fatherNameErr = $genderErr = $mobileNoErr = $ageErr = $aboutErr = $doberr = $dojErr = " ";
 function ragisterUser()
 {
-    $empNameErr = $fatherNameErr = $genderErr = $mobileNoErr = $ageErr = $aboutErr = $doberr = $dojErr = "";
+
 
 
     $emp_name = $fathers_name = $about = $designation = $district = $state = $doj = $dob = $Skills = $gender = $age = $mobile_number = "";
-
+    global $connPDO;
     if (isset($_POST['register'])) {
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -150,8 +151,8 @@ function ragisterUser()
 
             // Validating phone number
 
-            $mobileNoErr = mobileNoValidation($mobile_number);
-
+            // $mobileNoErr = mobileNoValidation($mobile_number);
+            $mobileNoErr="";
             // validating dob 
 
 
@@ -164,18 +165,18 @@ function ragisterUser()
 
             if ($empNameErr == "" && $fatherNameErr == "" && $genderErr == "" && $mobileNoErr == "" && $ageErr == "" && $aboutErr == "" && $doberr == "" && $dojErr == "") {
 
-                $sql = $connPDO->prepare("INSERT INTO ragistration ( `Employee_name`,
-                `Father_name`,
-                `Mobile_number`,
-                `Age`,
-                `Gender`,
-                `Skills`,
-                `DOB`,
-                `DOJ`,
-                `State`,
-                `District`,
-                `Designation`,
-                `About_employee`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
+                $sql = $connPDO->prepare("INSERT INTO ragistration ( 'Employee_name',
+                'Father_name',
+                'Mobile_number',
+                'Age',
+                'Gender',
+                'Skills',
+                'DOB',
+                'DOJ',
+                'State',
+                'District',
+                'Designation',
+                'About_employee') VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
                 $query = $sql->execute([
                     $emp_name,
                     $fathers_name,
@@ -244,4 +245,92 @@ function test_input($data)
     $data = stripcslashes($data);
     $data = htmlspecialchars($data);
     return $data;
+}
+
+function exportEmpData()
+{
+    global $conByMysqliCrud;
+    header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Disposition: attachment; filename=data.csv');
+    $output = fopen("php://output", "w");
+    fputcsv($output, array(
+        'emp_id',
+        'Employee_name',
+        'Father_name',
+        'Mobile_number',
+        'Age',
+        'Gender',
+        'Skills',
+        'DOB',
+        'DOJ',
+        'State',
+        'District',
+        'Designation',
+        'About_employee'
+    ));
+    $query = "SELECT * FROM ragistration";
+    $result = mysqli_query($conByMysqliCrud, $query);
+    while ($row = mysqli_fetch_assoc($result)) {
+        fputcsv($output, $row);
+    }
+    fclose($output);
+}
+function importDAta(){
+    global $conByMysqliCrud;
+    $filename=$_FILES["file"]["tmp_name"];    
+    if($_FILES["file"]["size"] > 0)
+     {
+        $file = fopen($filename, "r");
+         
+        $keys = fgetcsv($file);
+       while (($getDataValues = fgetcsv($file, 10000, ",")) !== FALSE)
+           {
+            $data=array_combine($keys,$getDataValues);
+            extract($data);
+             $sql = "INSERT INTO ragistration ( 
+             Employee_name,
+             Father_name,
+             Mobile_number,
+             Age,
+             Gender,
+             Skills,
+             DOB,
+             DOJ,
+             State,
+             District,
+             Designation,
+             About_employee) VALUES (
+               '$Employee_name',
+             '$Father_name',
+             '$Mobile_number',
+             '$Age',
+             '$Gender',
+             '$Skills',
+             '$DOB',
+             '$DOJ',
+             '$State',
+             '$District',
+             '$Designation',
+             '$About_employee'
+)";
+         $result = mysqli_query($conByMysqliCrud, $sql);
+        if(!isset($result))
+        {
+          echo "<script type=\"text/javascript\">
+              alert(\"Invalid File:Please Upload CSV File.\");
+              window.location = \"../registration.php\"
+              </script>";    
+        }
+        else {
+            echo "<script type=\"text/javascript\">
+            alert(\"CSV File has been successfully Imported.\");
+            window.location = \"../registration.php\"
+           </script>";
+           
+        }
+           }
+           
+    
+           fclose($file);  
+     }
 }

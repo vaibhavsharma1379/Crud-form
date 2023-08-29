@@ -20,7 +20,6 @@ if($rows_count>0){
     }
 }
 }
-
 if(isset($_POST['action']) && $_POST['action']=="deleteEmp"){
     extract($_POST);
     global $conByMysqliCrud;
@@ -44,6 +43,15 @@ if(isset($_POST['action']) && $_POST['action']=="updateEmp"){
         $resp["statuscode"]="1";
         $resp["description"]="Something went wrong with connection";
     }
-    echo json_encode($resp);
+    echo json_encode($resp) ;
+  
 }
+ if (isset($_POST['Export'])) {
+    
+    exportEmpData();
+}
+if (isset($_POST['Import'])){
+    importDAta();
+ }
+
 ?>

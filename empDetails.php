@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php require_once("function/function.php");
-        require_once "./config/config.php";
- ?>
+require_once "./config/config.php";
+
+?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,65 +17,81 @@
 </head>
 
 <body>
-    <div id="vaibhav">
-        <div class="m-5 d-flex justify-content-between">
-            <h2>Employee Details</h2>
-            <h3><a href="registration.php">Register Employee</a></h3>
+
+    <div class="container">
+        <div id="vaibhav">
+            <div class="m-5 d-flex justify-content-between">
+                <h2>Employee Details</h2>
+                <h3><a href="registration.php">Register Employee</a></h3>
+                <div>
+                    <form class="form-horizontal" action="ajax/ajax.php" method="post" name="upload_excel" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div class="col-md-4 col-md-offset-4">
+                                <input type="submit" name="Export" class="btn btn-success" value="export to excel" onsubmit="" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- <div id="check"></div> -->
+
+            <table id="emptable" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                        <th>Father Name</th>
+                        <th>Mobile Number</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Skills</th>
+                        <th>DOB</th>
+                        <th>DOJ</th>
+                        <th>State</th>
+                        <th>District</th>
+                        <th>Designation</th>
+                        <th>About Employee</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <?php
+                    getEmpdetails();
+                    ?>
+
+
+                </tbody>
+
+            </table>
+            <script>
+                
+                
+                function deleteByID(id) {
+
+                    $.ajax({
+                        url: "ajax/ajax.php",
+                        type: "POST",
+                        data: {
+                            "action": "deleteEmp",
+                            "emp_id": id
+                        },
+                        success: function(data, status) {
+                            resp = JSON.parse(data);
+                            alert(resp.description);
+
+                            //$("#emptable").load(window.location.href + "#emptable");
+                            $("#vaibhav").load(window.location.href + " #vaibhav");
+                            //  $("#emptable").html(resp);
+                        }
+                    })
+
+                }
+            </script>
+
         </div>
-        <!-- <div id="check"></div> -->
-
-        <table id="emptable" class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Employee ID</th>
-                    <th>Employee Name</th>
-                    <th>Father Name</th>
-                    <th>Mobile Number</th>
-                    <th>Age</th>
-                    <th>Gender</th>
-                    <th>Skills</th>
-                    <th>DOB</th>
-                    <th>DOJ</th>
-                    <th>State</th>
-                    <th>District</th>
-                    <th>Designation</th>
-                    <th>About Employee</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-            
-                <?php
-                getEmpdetails();
-                ?>
-
-
-            </tbody>
-
-        </table>
-        <script>
-            function deleteByID(id) {
-
-                $.ajax({
-                    url: "ajax/ajax.php",
-                    type: "POST",
-                    data: {
-                        "action": "deleteEmp",
-                        "emp_id": id
-                    },
-                    success: function(data, status) {
-                        resp = JSON.parse(data);
-                        alert(resp.description);
-                        
-                          //$("#emptable").load(window.location.href + "#emptable");
-                          $( "#vaibhav" ).load(window.location.href + " #vaibhav" );
-                      //  $("#emptable").html(resp);
-                }})
-            
-            }
-        </script>
-
     </div>
+
 </body>
 
 </html>
