@@ -1,5 +1,136 @@
 <?php
+function ragisterAdmin()
+{
+    global $connPDO;
+    // print_r("yju6jjujuj");
+    // print_r($_POST);
+    extract($_POST);
+    // print_r($email);
+    if($password===$confirm_password){
+    $sql = $connPDO->prepare("INSERT INTO admins ( 
+       email ,
+       password
+    ) VALUES(?,?)");
+    $query = $sql->execute([
+        $email,
+        $password,
+        
+    ]);
+    if ($query) {
+        echo "<script>alert('Admin ragistered succesfully');</script>";
+        header("Location:loginAdmin.php");
+    } else {
+        echo "<script>alert('somthing went wrong');</script>";
+    }
+    
+}
+else{
+    echo "<script>alert('password does not match');</script>";
+}
 
+}
+function loginAdmin(){
+     print_r("yju6jjujuj");
+     print_r($_POST);
+}
+function ragisterUser()
+{
+
+
+
+    $emp_name = $fathers_name = $about = $designation = $district = $state = $doj = $dob = $Skills = $gender = $age = $mobile_number = "";
+    global $connPDO;
+    if (isset($_POST['register'])) {
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+
+            $emp_name = $_POST['name'];
+            $fathers_name = $_POST['fathername'];
+            $mobile_number = $_POST['mobile'];
+            $age = $_POST['age'];
+            $gender = $_POST['gender'];
+            if (isset($_POST['intrest'])) {
+                $Skills = implode(',', $_POST['intrest']);
+            } else {
+                $Skills = '';
+            }
+            // $Skills=$_POST['intrest'];
+            $dob = $_POST['dob'];
+            $doj = $_POST['doj'];
+            $state = $_POST['state'];
+            $district = $_POST['district'];
+            $designation = $_POST['designation'];
+            $about = $_POST['about'];
+            // echo "<pre>" ;echo $Skills; die('kk');
+
+            // name validation function
+
+            $empNameErr = nameErr($emp_name);
+
+            $fatherNameErr = nameErr($fathers_name);
+
+
+            // gender Validation
+            $genderErr = genderErr($gender);
+
+            // About validation
+            $aboutErr = aboutvaliadtion($about);
+
+            // Validating phone number
+
+            // $mobileNoErr = mobileNoValidation($mobile_number);
+            $mobileNoErr = "";
+            // validating dob 
+
+
+            $doberr = validateDate($dob);
+            $dojErr = validateDate($doj);
+
+            // age validation 
+            $ageErr = ageValidation($age);
+
+
+            if ($empNameErr == "" && $fatherNameErr == "" && $genderErr == "" && $mobileNoErr == "" && $ageErr == "" && $aboutErr == "" && $doberr == "" && $dojErr == "") {
+
+                $sql = $connPDO->prepare("INSERT INTO ragistration ( 
+                    Employee_name,
+                Father_name,
+                Mobile_number,
+                Age,
+                Gender,
+                Skills,
+                DOB,
+                DOJ,
+                State,
+                District,
+                Designation,
+                About_employee) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
+                $query = $sql->execute([
+                    $emp_name,
+                    $fathers_name,
+                    $mobile_number,
+                    $age,
+                    $gender,
+                    $Skills,
+                    $dob,
+                    $doj,
+                    $state,
+                    $district,
+                    $designation,
+                    $about
+                ]);
+                // print_r($query);
+                if ($query) {
+                    echo "<script>alert('Employee ragister succesfully');</script>";
+                } else {
+                    echo "<script>alert('somthing went wrong');</script>";
+                }
+            }
+            return array("empNameErr" => $empNameErr, "fatherNameErr" => $fatherNameErr, "genderErr" => $genderErr, "mobileNoErr" => $mobileNoErr, "ageErr" => $age, "aboutErr" => $aboutErr, "doberr" => $doberr, "dojErr" => $dojErr);
+        }
+    }
+}
 function getEmpDetailsByID($tableName, $key, $keyVal)
 {
     global $conByMysqliCrud;
@@ -105,104 +236,7 @@ function updatedata()
     return $result;
 }
 $empNameErr = $fatherNameErr = $genderErr = $mobileNoErr = $ageErr = $aboutErr = $doberr = $dojErr = " ";
-function ragisterUser()
-{
 
-
-
-    $emp_name = $fathers_name = $about = $designation = $district = $state = $doj = $dob = $Skills = $gender = $age = $mobile_number = "";
-    global $connPDO;
-    if (isset($_POST['register'])) {
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-
-            $emp_name = $_POST['name'];
-            $fathers_name = $_POST['fathername'];
-            $mobile_number = $_POST['mobile'];
-            $age = $_POST['age'];
-            $gender = $_POST['gender'];
-            if (isset($_POST['intrest'])) {
-                $Skills = implode(',', $_POST['intrest']);
-            } else {
-                $Skills = '';
-            }
-            // $Skills=$_POST['intrest'];
-            $dob = $_POST['dob'];
-            $doj = $_POST['doj'];
-            $state = $_POST['state'];
-            $district = $_POST['district'];
-            $designation = $_POST['designation'];
-            $about = $_POST['about'];
-            // echo "<pre>" ;echo $Skills; die('kk');
-
-            // name validation function
-
-            $empNameErr = nameErr($emp_name);
-
-            $fatherNameErr = nameErr($fathers_name);
-
-
-            // gender Validation
-            $genderErr = genderErr($gender);
-
-            // About validation
-            $aboutErr = aboutvaliadtion($about);
-
-            // Validating phone number
-
-            // $mobileNoErr = mobileNoValidation($mobile_number);
-            $mobileNoErr="";
-            // validating dob 
-
-
-            $doberr = validateDate($dob);
-            $dojErr = validateDate($doj);
-
-            // age validation 
-            $ageErr = ageValidation($age);
-
-
-            if ($empNameErr == "" && $fatherNameErr == "" && $genderErr == "" && $mobileNoErr == "" && $ageErr == "" && $aboutErr == "" && $doberr == "" && $dojErr == "") {
-
-                $sql = $connPDO->prepare("INSERT INTO ragistration ( 
-                    Employee_name,
-                Father_name,
-                Mobile_number,
-                Age,
-                Gender,
-                Skills,
-                DOB,
-                DOJ,
-                State,
-                District,
-                Designation,
-                About_employee) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
-                $query = $sql->execute([
-                    $emp_name,
-                    $fathers_name,
-                    $mobile_number,
-                    $age,
-                    $gender,
-                    $Skills,
-                    $dob,
-                    $doj,
-                    $state,
-                    $district,
-                    $designation,
-                    $about
-                ]);
-                // print_r($query);
-                if ($query) {
-                    echo "<script>alert('Employee ragister succesfully');</script>";
-                } else {
-                    echo "<script>alert('somthing went wrong');</script>";
-                }
-            }
-            return array("empNameErr" => $empNameErr, "fatherNameErr" => $fatherNameErr, "genderErr" => $genderErr, "mobileNoErr" => $mobileNoErr, "ageErr" => $age, "aboutErr" => $aboutErr, "doberr" => $doberr, "dojErr" => $dojErr);
-        }
-    }
-}
 
 function getEmpdetails()
 {
@@ -276,19 +310,18 @@ function exportEmpData()
     }
     fclose($output);
 }
-function importDAta(){
+function importDAta()
+{
     global $conByMysqliCrud;
-    $filename=$_FILES["file"]["tmp_name"];    
-    if($_FILES["file"]["size"] > 0)
-     {
+    $filename = $_FILES["file"]["tmp_name"];
+    if ($_FILES["file"]["size"] > 0) {
         $file = fopen($filename, "r");
-         
+
         $keys = fgetcsv($file);
-       while (($getDataValues = fgetcsv($file, 10000, ",")) !== FALSE)
-           {
-            $data=array_combine($keys,$getDataValues);
+        while (($getDataValues = fgetcsv($file, 10000, ",")) !== FALSE) {
+            $data = array_combine($keys, $getDataValues);
             extract($data);
-             $sql = "INSERT INTO ragistration ( 
+            $sql = "INSERT INTO ragistration ( 
              Employee_name,
              Father_name,
              Mobile_number,
@@ -314,24 +347,21 @@ function importDAta(){
              '$Designation',
              '$About_employee'
 )";
-         $result = mysqli_query($conByMysqliCrud, $sql);
-        if(!isset($result))
-        {
-          echo "<script type=\"text/javascript\">
+            $result = mysqli_query($conByMysqliCrud, $sql);
+            if (!isset($result)) {
+                echo "<script type=\"text/javascript\">
               alert(\"Invalid File:Please Upload CSV File.\");
               window.location = \"../registration.php\"
-              </script>";    
-        }
-        else {
-            echo "<script type=\"text/javascript\">
+              </script>";
+            } else {
+                echo "<script type=\"text/javascript\">
             alert(\"CSV File has been successfully Imported.\");
             window.location = \"../registration.php\"
            </script>";
-           
+            }
         }
-           }
-           
-    
-           fclose($file);  
-     }
+
+
+        fclose($file);
+    }
 }

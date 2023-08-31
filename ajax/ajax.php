@@ -1,4 +1,5 @@
 <?php
+
 require_once "../config/config.php";
 require_once "../function/function.php";
 $conn=mysqli_db_connect("states");
@@ -53,5 +54,12 @@ if(isset($_POST['action']) && $_POST['action']=="updateEmp"){
 if (isset($_POST['Import'])){
     importDAta();
  }
+ 
+ 
+if(isset($_POST['registerAdminbtn'])){
+    print_r($_POST);
+    echo "<script>alert('ragister suucce')</script>";
+}
+
 
 ?>

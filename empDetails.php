@@ -76,27 +76,32 @@ require_once "./config/config.php";
             ]);
             curl_setopt($ch,CURLOPT_URL,"http://localhost/crudform/api/getEmployeeData.php?id=135");
             $data=curl_exec($ch);
-            var_dump($data);
+           
             curl_close($ch);
-            
-            $status_code = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
-            // echo '<tr>';
-            // echo '<td>' . $data["emp_id"] . '</td>';
-            // echo '<td>' . $data["Employee_name"] . '</td>';
-            // echo '<td>' . $data["Father_name"] . '</td>';
-            // echo '<td>' . $data["Mobile_number"] . '</td>';
-            // echo '<td>' . $data["Age"] . '</td>';
-            // echo '<td>' . $data["Gender"] . '</td>';
-            // echo '<td>' . $data["Skills"] . '</td>';
-            // echo '<td>' . $data["DOB"] . '</td>';
-            // echo '<td>' . $data["DOJ"] . '</td>';
-            // echo '<td>' . $data["State"] . '</td>';
-            // echo '<td>' . $data["District"] . '</td>';
-            // echo '<td>' . $data["Designation"] . '</td>';
-            // echo '<td>' . $data["About_employee"] . '</td>';
-            
+     
+        //    print_r($data);
+     //   $data=(array)$data;
+           $data_obj=json_decode($data);
+           $data_array=json_decode($data,true);
+ 
 
-            // echo '</tr>';
+            $status_code = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+            echo '<tr>';
+            echo '<td>' . $data_array["emp_id"] . '</td>';
+            echo '<td>' . $data_array["Employee_name"] . '</td>';
+            echo '<td>' . $data_array["Father_name"] . '</td>';
+            echo '<td>' . $data_array["Mobile_number"] . '</td>';
+            echo '<td>' . $data_array["Age"] . '</td>';
+            echo '<td>' . $data_array["Gender"] . '</td>';
+            echo '<td>' . $data_array["Skills"] . '</td>';
+            echo '<td>' . $data_array["DOB"] . '</td>';
+            echo '<td>' . $data_array["DOJ"] . '</td>';
+            echo '<td>' . $data_array["State"] . '</td>';
+            echo '<td>' . $data_array["District"] . '</td>';
+            echo '<td>' . $data_array["Designation"] . '</td>';
+            echo '<td>' . $data_array["About_employee"] . '</td>';
+           
+            echo '</tr>';
            
             ?>
             <script>

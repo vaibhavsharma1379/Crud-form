@@ -12,7 +12,7 @@ if(isset($ID)){
   extract($empDetails);
 }
 else{
-  $fromName="Registration Page";
+  $fromName="Register Employee";
   $buttonName="Register";
 }
 
