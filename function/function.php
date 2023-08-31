@@ -165,18 +165,19 @@ function ragisterUser()
 
             if ($empNameErr == "" && $fatherNameErr == "" && $genderErr == "" && $mobileNoErr == "" && $ageErr == "" && $aboutErr == "" && $doberr == "" && $dojErr == "") {
 
-                $sql = $connPDO->prepare("INSERT INTO ragistration ( 'Employee_name',
-                'Father_name',
-                'Mobile_number',
-                'Age',
-                'Gender',
-                'Skills',
-                'DOB',
-                'DOJ',
-                'State',
-                'District',
-                'Designation',
-                'About_employee') VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
+                $sql = $connPDO->prepare("INSERT INTO ragistration ( 
+                    Employee_name,
+                Father_name,
+                Mobile_number,
+                Age,
+                Gender,
+                Skills,
+                DOB,
+                DOJ,
+                State,
+                District,
+                Designation,
+                About_employee) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
                 $query = $sql->execute([
                     $emp_name,
                     $fathers_name,

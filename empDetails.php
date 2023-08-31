@@ -59,11 +59,46 @@ require_once "./config/config.php";
                     <?php
                     getEmpdetails();
                     ?>
-
+                    
 
                 </tbody>
 
             </table>
+            <div style="height:230px"></div>
+            <?php
+            $headers=[
+                "User-Agent:Vaibhav"
+            ];
+            $ch=curl_init();
+            curl_setopt_array($ch,[
+                CURLOPT_HTTPHEADER=>$headers,
+                CURLOPT_RETURNTRANSFER=>true
+            ]);
+            curl_setopt($ch,CURLOPT_URL,"http://localhost/crudform/api/getEmployeeData.php?id=135");
+            $data=curl_exec($ch);
+            var_dump($data);
+            curl_close($ch);
+            
+            $status_code = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+            // echo '<tr>';
+            // echo '<td>' . $data["emp_id"] . '</td>';
+            // echo '<td>' . $data["Employee_name"] . '</td>';
+            // echo '<td>' . $data["Father_name"] . '</td>';
+            // echo '<td>' . $data["Mobile_number"] . '</td>';
+            // echo '<td>' . $data["Age"] . '</td>';
+            // echo '<td>' . $data["Gender"] . '</td>';
+            // echo '<td>' . $data["Skills"] . '</td>';
+            // echo '<td>' . $data["DOB"] . '</td>';
+            // echo '<td>' . $data["DOJ"] . '</td>';
+            // echo '<td>' . $data["State"] . '</td>';
+            // echo '<td>' . $data["District"] . '</td>';
+            // echo '<td>' . $data["Designation"] . '</td>';
+            // echo '<td>' . $data["About_employee"] . '</td>';
+            
+
+            // echo '</tr>';
+           
+            ?>
             <script>
                 
                 
