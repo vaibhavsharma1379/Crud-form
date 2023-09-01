@@ -2,7 +2,7 @@
 require_once "./function/function.php";
 require_once "./config/config.php";
 if(isset($_POST['registerAdminbtn'])){
-  print_r("succesfull");
+  // print_r("succesfull");
   ragisterAdmin();
 }
 ?>
@@ -28,15 +28,15 @@ if(isset($_POST['registerAdminbtn'])){
           <form method="post" id="registerAdmin" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <div class="form-group">
               <label for="email">Email address</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+              <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+              <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
             </div>
             <div class="form-group">
               <label for="confirm-password">Confirm Password</label>
-              <input type="password" class="form-control" name="confirm_password" id="confirm-password" placeholder="Confirm Password">
+              <input type="password" class="form-control" name="confirm_password" id="confirm-password" placeholder="Confirm Password" required>
             </div>
             <button type="submit" class="btn btn-primary" name="registerAdminbtn" value="registerAdmin">Register</button>
           </form>

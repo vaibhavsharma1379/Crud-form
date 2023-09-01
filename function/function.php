@@ -6,33 +6,40 @@ function ragisterAdmin()
     // print_r($_POST);
     extract($_POST);
     // print_r($email);
-    if($password===$confirm_password){
-    $sql = $connPDO->prepare("INSERT INTO admins ( 
-       email ,
-       password
-    ) VALUES(?,?)");
-    $query = $sql->execute([
-        $email,
-        $password,
-        
-    ]);
-    if ($query) {
-        echo "<script>alert('Admin ragistered succesfully');</script>";
-        header("Location:loginAdmin.php");
-    } else {
-        echo "<script>alert('somthing went wrong');</script>";
+    $query=$connPDO->prepare('SELECT * FROM admins where email="'.$email.'"');
+    $query->execute();
+    $row=$query->rowCount();
+    if($row==0){
+        if($password===$confirm_password){
+   
+    
+            $sql = $connPDO->prepare("INSERT INTO admins ( 
+                email ,
+                password
+             ) VALUES(?,?)");
+             $query = $sql->execute([
+                 $email,
+                 $password,
+                 
+             ]);
+             if ($query) {
+                 echo "<script>alert('Admin ragistered succesfully');</script>";
+                 header("Location:loginAdmin.php");
+             } else {
+                 echo "<script>alert('somthing went wrong');</script>";
+             }
+             
+            }
+         else{
+             echo "<script>alert('password does not match');</script>";
+         }
+    }
+    else{
+        echo "<script>alert('user already exist');</script>";
     }
     
 }
-else{
-    echo "<script>alert('password does not match');</script>";
-}
 
-}
-function loginAdmin(){
-     print_r("yju6jjujuj");
-     print_r($_POST);
-}
 function ragisterUser()
 {
 
@@ -236,7 +243,35 @@ function updatedata()
     return $result;
 }
 $empNameErr = $fatherNameErr = $genderErr = $mobileNoErr = $ageErr = $aboutErr = $doberr = $dojErr = " ";
-
+function loginAdmin(){
+    global $connPDO;
+    extract($_POST);
+    // print_r($email);
+    $query=$connPDO->prepare('SELECT * FROM admins where email="'.$email.'"');
+    $query->execute();
+    $row=$query->rowCount();
+    
+    if($row>0){
+        $data=$query->fetch(PDO::FETCH_ASSOC);
+        $email=$data["email"];
+        $adminPassword=$data["password"];
+        if($adminPassword==$password){
+            $_SESSION['email']=$email;
+            $_SESSION['logged_in']=true;
+            setcookie('email',$email,time()+(86400*30),'/');
+            setcookie('logged_in',true,time()+(86400*30),'/');
+            header("Location:empDetails.php");
+            echo "<script>alert('$email login successfully')</script>";
+        }
+        else{
+            echo "<script>alert('email or password incorrect')</script>";
+        }
+        // 
+    }
+    else{
+        echo "<script>alert('User does not exist please register user first')</script>";
+    }
+}
 
 function getEmpdetails()
 {

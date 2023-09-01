@@ -1,4 +1,7 @@
 <?php
+require_once "./function/function.php";
+require_once "./config/config.php";
+session_start();
 if(isset($_POST['loginAdmin'])){
   loginAdmin();
 }
@@ -25,11 +28,11 @@ if(isset($_POST['loginAdmin'])){
           <form method="post" id="adminLoginForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <div class="form-group">
               <label for="email">Email address</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+              <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>  
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+              <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
             </div>
           <button type="submit" class="btn btn-primary" name="loginAdmin" value="loginAdmin">Login</button>
           </form>
