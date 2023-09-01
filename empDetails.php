@@ -91,11 +91,12 @@
 
             //    print_r($data);
             //   $data=(array)$data;
-            $data_obj = json_decode($data);
+            // $data_obj = json_decode($data);
             $data_array = json_decode($data, true);
 
-
+            // print_r($data_array);
             $status_code = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+            
             echo '<tr>';
             echo '<td>' . $data_array["emp_id"] . '</td>';
             echo '<td>' . $data_array["Employee_name"] . '</td>';

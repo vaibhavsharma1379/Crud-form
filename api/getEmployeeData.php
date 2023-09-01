@@ -10,8 +10,8 @@ $empData=json_encode($empData);
 print_r($empData);
 // echo $empData;
 // return($empData);
-$aq=100;
-echo $aq;
+// $aq=100;
+// echo $aq;
 // unset($aq);
 // echo $aq."jj";
 
