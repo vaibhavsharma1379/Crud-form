@@ -28,6 +28,7 @@
  
   </div>
   <style>
+    
     .error{
       color: #FF0000;
     }

@@ -15,11 +15,17 @@ function ragisterAdmin()
     
             $sql = $connPDO->prepare("INSERT INTO admins ( 
                 email ,
-                password
-             ) VALUES(?,?)");
+                password,
+                mobile,
+                login_ip,
+                status
+             ) VALUES(?,?,?,?,?)");
              $query = $sql->execute([
                  $email,
                  $password,
+                 $mobile,
+                 $_SERVER['HTTP_HOST'],
+                 $status
                  
              ]);
              if ($query) {
@@ -302,7 +308,7 @@ function getEmpdetails()
             echo '<td>' . $data["District"] . '</td>';
             echo '<td>' . $data["Designation"] . '</td>';
             echo '<td>' . $data["About_employee"] . '</td>';
-            echo '<td><a href="./registration.php?id=' . $ID . '" class="btn btn-danger">EDIT</a></td>';
+            echo '<td><a href="./registration.php?id=' . $ID . '" class="btn btn-primary">EDIT</a></td>';
             echo '<td><a onclick="deleteByID(' . $ID . ')" class="btn btn-danger">Delete</a></td>';
 
             echo '</tr>';

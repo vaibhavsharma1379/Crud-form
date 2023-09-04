@@ -21,7 +21,10 @@ else{
     extract($formerr);
   }
  
- 
+  session_start();
+  if (!isset($_SESSION["logged_in"]) && !$_SESSION["logged_in"] == "true") { 
+    header("Location: loginAdmin.php");
+  }
  
 ?>
 
@@ -33,7 +36,7 @@ else{
 </script>
 <div class="d-flex justify-content-between">
   <h1 class="mb-3"><?= $fromName?></h1>
-  <h3><a href="./empDetails.php">View Employee Details</a></h3>
+  <h3><a href="./empDetails.php" class="btn btn-success">View Employee Details</a></h3>
   <div id="wrap">
         <div class="container">
             <div class="row">
