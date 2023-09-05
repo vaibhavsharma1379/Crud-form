@@ -10,3 +10,4 @@ $msg = wordwrap($msg,70);
 
 // send email
 mail("vaibhavsrh78@gmail.com","My subject",$msg);
+?>
