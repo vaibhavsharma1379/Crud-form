@@ -1,7 +1,7 @@
 <?php
 session_start();
+setcookie("email","", time()-(3600*24*2));
+setcookie("password","",time()-(3600*24*2));
 session_destroy();
-setcookie("email","", time() -3600,"/");
-setcookie("logged_in","", time() -3600,"/");
 header("Location: loginAdmin.php");
 ?>

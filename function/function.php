@@ -1,4 +1,14 @@
 <?php
+function send_mail()
+{
+    $msg = "First line of text\nSecond line of text";
+
+    // use wordwrap() if lines are longer than 70 characters
+    $msg = wordwrap($msg, 70);
+
+    // send email
+    mail("someone@example.com", "My subject", $msg);
+}
 function ragisterAdmin()
 {
     global $connPDO;
@@ -6,13 +16,13 @@ function ragisterAdmin()
     // print_r($_POST);
     extract($_POST);
     // print_r($email);
-    $query=$connPDO->prepare('SELECT * FROM admins where email="'.$email.'"');
+    $query = $connPDO->prepare('SELECT * FROM admins where email="' . $email . '"');
     $query->execute();
-    $row=$query->rowCount();
-    if($row==0){
-        if($password===$confirm_password){
-   
-    
+    $row = $query->rowCount();
+    if ($row == 0) {
+        if ($password === $confirm_password) {
+            $psw = md5($password);
+
             $sql = $connPDO->prepare("INSERT INTO admins ( 
                 email ,
                 password,
@@ -20,32 +30,27 @@ function ragisterAdmin()
                 login_ip,
                 status
              ) VALUES(?,?,?,?,?)");
-             $query = $sql->execute([
-                 $email,
-                 $password,
-                 $mobile,
-                 $_SERVER['HTTP_HOST'],
-                 $status
-                 
-             ]);
-             if ($query) {
-                 echo "<script>alert('Admin ragistered succesfully');</script>";
-                 header("Location:loginAdmin.php");
-             } else {
-                 echo "<script>alert('somthing went wrong');</script>";
-             }
-             
+            $query = $sql->execute([
+                $email,
+                $psw,
+                $mobile,
+                $_SERVER['HTTP_HOST'],
+                $status
+
+            ]);
+            if ($query) {
+                echo "<script>alert('Admin ragistered succesfully');</script>";
+                header("Location:loginAdmin.php");
+            } else {
+                echo "<script>alert('somthing went wrong');</script>";
             }
-         else{
-             echo "<script>alert('password does not match');</script>";
-         }
-    }
-    else{
+        } else {
+            echo "<script>alert('password does not match');</script>";
+        }
+    } else {
         echo "<script>alert('user already exist');</script>";
     }
-    
 }
-
 function ragisterUser()
 {
 
@@ -249,32 +254,35 @@ function updatedata()
     return $result;
 }
 $empNameErr = $fatherNameErr = $genderErr = $mobileNoErr = $ageErr = $aboutErr = $doberr = $dojErr = " ";
-function loginAdmin(){
+function loginAdmin()
+{
     global $connPDO;
     extract($_POST);
     // print_r($email);
-    $query=$connPDO->prepare('SELECT * FROM admins where email="'.$email.'"');
+    $query = $connPDO->prepare('SELECT * FROM admins where email="' . $email . '"');
     $query->execute();
-    $row=$query->rowCount();
-    
-    if($row>0){
-        $data=$query->fetch(PDO::FETCH_ASSOC);
-        $email=$data["email"];
-        $adminPassword=$data["password"];
-        if($adminPassword==$password){
-            $_SESSION['email']=$email;
-            $_SESSION['logged_in']=true;
-            setcookie('email',$email,time()+(86400*30),'/');
-            setcookie('logged_in',true,time()+(86400*30),'/');
+    $row = $query->rowCount();
+
+    if ($row > 0) {
+        $data = $query->fetch(PDO::FETCH_ASSOC);
+        $email = $data["email"];
+        $adminPassword = $data["password"];
+        if ($adminPassword == md5($password)) {
+            $_SESSION['email'] = $email;
+            $_SESSION['logged_in'] = true;
+            if (!empty($remember)) {
+                // print_r('wregrewgtrehterhteh');
+                setcookie('email', $email, time() + (3600 * 24 * 2));
+                setcookie('password', $password, time() + (3600 * 24 * 2));
+            }
+
             header("Location:empDetails.php");
             echo "<script>alert('$email login successfully')</script>";
-        }
-        else{
+        } else {
             echo "<script>alert('email or password incorrect')</script>";
         }
         // 
-    }
-    else{
+    } else {
         echo "<script>alert('User does not exist please register user first')</script>";
     }
 }

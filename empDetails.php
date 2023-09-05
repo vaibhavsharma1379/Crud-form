@@ -23,7 +23,11 @@
             <?php require_once("function/function.php");
             require_once "./config/config.php";
             session_start();
-            if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == "true") { ?>
+            if(isset($_COOKIE['email'])&& isset($_COOKIE['password'])) {?>
+                <h1 style="font-family:Georgia, 'Times New Roman', Times, serif; color:white">Welcome <span style="color:brown"><?php echo $_COOKIE['email'] ?></span></h1>
+                <p><a href='logout.php' class="btn btn-success" type="submit">Logout</a></p>
+           <?php }
+            else if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == "true") { ?>
                 <h1 style="font-family:Georgia, 'Times New Roman', Times, serif; color:white">Welcome <span style="color:brown"><?php echo $_SESSION['email'] ?></span></h1>
                 <p><a href='logout.php' class="btn btn-success" type="submit">Logout</a></p>
             <?php
