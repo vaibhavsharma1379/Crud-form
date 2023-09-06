@@ -34,10 +34,10 @@ if (isset($_POST["resetBtn"])) {
         <hr>
         <div class="d-flex justify-content-between">
             <div>
-                <P><a href="register.php">Login</a></P>
+                <P><a href="loginAdmin.php">Login</a></P>
             </div>
             <div>
-                <P><a href="login.php">Register</a></P>
+                <P><a href="registerAdmin.php">Register</a></P>
             </div>
         </div>
     </div>

@@ -17,48 +17,50 @@
 
 <body>
   <div class="container mt-5">
-   
-  <?php
-  if(isset($_GET["id"])){
-    $ID=$_GET["id"];
-  }
-  
-  ?>
- <?php require "include/registrationForm.php"?>
- 
+
+    <?php
+    if (isset($_GET["id"])) {
+      $ID = $_GET["id"];
+    }
+
+    ?>
+    <?php require "include/registrationForm.php" ?>
+
   </div>
   <style>
-    
-    .error{
+    .error {
       color: #FF0000;
     }
+
     input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   </style>
-   <script>
-   $(document).ready(function() {
-    $("#State").on("change", function() {
-      var stateName = this.value;
-     
-      if (stateName != "") {
-        $.ajax({
-          url: "ajax/ajax.php",
-          type: "POST",
-          data: {
-            "action": 'getCity',
-            'state_name': stateName
-          },
-          success: function(resp) {
-            $("#district").html(resp);
-          }
-        })
-      }
+  <script>
+    
+    $(document).ready(function() {
+      $("#State").on("change", function() {
+        var stateName = this.value;
+
+        if (stateName != "") {
+          $.ajax({
+            url: "ajax/ajax.php",
+            type: "POST",
+            data: {
+              "action": 'getCity',
+              'state_name': stateName
+            },
+          
+            success: function(resp) {
+              $("#district").html(resp);
+            }
+          })
+        }
+      })
     })
-  })
-</script>
+  </script>
 </body>
 
 </html>

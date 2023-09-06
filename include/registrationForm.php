@@ -182,10 +182,10 @@ if (!isset($_COOKIE['email']) && !isset($_COOKIE['password'])) {
                           } else {
                             echo "";
                           } ?>"><?php if (isset($State)) {
-                                                                                    echo $State;
-                                                                                  } else {
-                                                                                    echo "--Please choose an option--";
-                                                                                  } ?></option>
+                                  echo $State;
+                                } else {
+                                  echo "--Please choose an option--";
+                                } ?></option>
           <?php
           $sql = "SELECT distinct States FROM district___sheet1 order by States ASC";
           $query = mysqli_query($conn, $sql);
@@ -211,10 +211,10 @@ if (!isset($_COOKIE['email']) && !isset($_COOKIE['password'])) {
                           } else {
                             echo "";
                           } ?>"><?php if (isset($District)) {
-                                                                                          echo $District;
-                                                                                        } else {
-                                                                                          echo "--Please choose an option--";
-                                                                                        } ?></option>
+                                  echo $District;
+                                } else {
+                                  echo "--Please choose an option--";
+                                } ?></option>
 
         </select>
       </div>
@@ -230,10 +230,10 @@ if (!isset($_COOKIE['email']) && !isset($_COOKIE['password'])) {
                         } else {
                           echo "";
                         } ?>"><?php if (isset($Designation)) {
-                                                                                              echo $Designation;
-                                                                                            } else {
-                                                                                              echo "--Please choose an option--";
-                                                                                            } ?></option>
+                                echo $Designation;
+                              } else {
+                                echo "--Please choose an option--";
+                              } ?></option>
         <option value="manager">Manager</option>
         <option value="engineer">Engineer</option>
         <option value="analyst">Analyst</option>
