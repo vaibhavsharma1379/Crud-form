@@ -414,3 +414,39 @@ function importDAta()
         fclose($file);
     }
 }
+function updateAdminPasswordByMail($token)
+{
+    global $connPDO;
+    extract($_POST);
+    $password = md5($password);
+    $query = $connPDO->prepare('UPDATE admins SET password="' . $password . '" WHERE token ="' . $token . '"');
+    $query->execute();
+    $row = $query->rowCount();
+    if ($row > 0) {
+        header("Location:loginAdmin.php");
+    } else {
+        echo "<script>something went wrong</script>";
+    }
+
+
+
+    // UPDATE ragistration SET Employee_name='$emp_name',Father_name='$fathers_name',Mobile_number='$mobile_number',Age='$age',Gender='$gender',Skills='$Skills',DOB='$dob',DOJ='$doj',State='$state',District='$district',Designation='$designation',About_employee='$about'  where emp_id=$emp_id";
+}
+function updateAdminPasswordByOTP()
+{
+    global $connPDO;
+    extract($_POST);
+    $password = md5($password);
+    $query = $connPDO->prepare('UPDATE admins SET password="' . $password . '" WHERE email="' . $email . '"');
+    $query->execute();
+    $row = $query->rowCount();
+    if ($row > 0) {
+        header("Location:loginAdmin.php");
+    } else {
+        echo "<script>something went wrong</script>";
+    }
+
+
+
+    // UPDATE ragistration SET Employee_name='$emp_name',Father_name='$fathers_name',Mobile_number='$mobile_number',Age='$age',Gender='$gender',Skills='$Skills',DOB='$dob',DOJ='$doj',State='$state',District='$district',Designation='$designation',About_employee='$about'  where emp_id=$emp_id";
+}

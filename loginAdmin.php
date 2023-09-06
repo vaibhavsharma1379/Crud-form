@@ -47,12 +47,17 @@ if (isset($_POST['sendmail'])) {
               <div><input type="checkbox" name="remember" id="remember"/>
                 <label for="remember-me" class="form-check-label">Remember me</label>
             </div>
-              <!-- <button type="submit" class="btn btn-primary" name="sendmail">sent mail</button> -->
+            
             </form>
           </div>
           <div class="card-footer">
             <p>Don't have an account? <a href="registerAdmin.php">Register here</a></p>
-            
+            <p ><a href="forgetPasswordByMail.php">forgot password?</a></p>
+            <!-- <select>
+              <option >forget password?</a></option>
+              <option value="1"><a href="forgetPassword.php">forgot password by Otp?</a></option>
+              <option value="2"><a href="forgetPassword.php">forgot password by Mail?</a></option>
+            </select> -->
           </div>
           
         </div>
